@@ -4,29 +4,23 @@ import {
   Route,
 } from 'react-router-dom';
 import NavBar from './components/NavBar';
-import HomePage from './pages/HomePage';
-import CreatePage from './pages/CreatePage';
-import EditPage from './pages/EditPage';
-import ListPage from './pages/ListPage';
+import routes from './routes';
+
 
 
 function App() {
-  
 
   return (
     <Router>
       <NavBar />
       <div className='container'>
         <Routes>
-          <Route path='/' element={<HomePage />}></Route>
-          <Route path='/blogs' element={<ListPage />}></Route>
-          <Route path='/blogs/create' element={<CreatePage />}></Route>
-          <Route path='/blogs/edit' element={<EditPage />}></Route>
-
+          {routes.map((route) => {
+            return <Route key={route.id} path={route.path} element={route.component()} />
+          })}
         </Routes>  
       </div>
     </Router>
-    
     )
 }
 
