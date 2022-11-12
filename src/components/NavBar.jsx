@@ -9,7 +9,7 @@ const NavBar = () => {
               <NavLink activeclassname="active" className="nav-link" aria-current="page" to="/blogs">Blogs</NavLink>
             </div>
         </div>
-      </nav>
+      </nav> 
   )
 }
 

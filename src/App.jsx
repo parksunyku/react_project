@@ -13,14 +13,14 @@ function App() {
   return (
     <Router>
       <NavBar />
-      <div className='container'>
+      <div className='container mt-3'>
         <Routes>
           {routes.map((route) => {
-            return <Route key={route.id} path={route.path} element={route.component()} />
+            return <Route key={route.path} path={route.path} element={route.component()} />
           })}
         </Routes>  
       </div>
-    </Router>
+    </Router> 
     )
 }
 

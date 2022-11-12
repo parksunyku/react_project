@@ -2,28 +2,23 @@
   "posts": [
     {
       "title": "hello",
-      "body": "body",
-      "id": 1
+      "body": "body"
     },
     {
       "title": "test",
-      "body": "test",
-      "id": 2
+      "body": "test"
     },
     {
       "title": "test",
-      "body": "test",
-      "id": 3
+      "body": "test"
     },
     {
       "title": "test",
-      "body": "test",
-      "id": 4
+      "body": "test"
     },
     {
       "title": "test",
-      "body": "test",
-      "id": 5
+      "body": "test"
     }
   ]
 }
