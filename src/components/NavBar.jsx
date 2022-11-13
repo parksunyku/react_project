@@ -6,7 +6,14 @@ const NavBar = () => {
         <div className="container">
           <Link className="navbar-brand" to="/">Home</Link>
             <div className="navbar-nav">
-              <NavLink activeclassname="active" className="nav-link" aria-current="page" to="/blogs">Blogs</NavLink>
+              <NavLink 
+                activeclassname="active"
+                className="nav-link"
+                aria-current="page"
+                to="/blogs"
+                >
+                Blogs
+              </NavLink>
             </div>
         </div>
       </nav> 

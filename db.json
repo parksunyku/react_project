@@ -1,24 +1,13 @@
 {
   "posts": [
     {
-      "title": "hello",
-      "body": "body"
-    },
-    {
-      "title": "test",
-      "body": "test"
-    },
-    {
-      "title": "test",
-      "body": "test"
-    },
-    {
-      "title": "test",
-      "body": "test"
-    },
-    {
-      "title": "test",
-      "body": "test"
+      "title": "title",
+      "body": "1",
+      "id": 1
     }
-  ]
+  ],
+  "comments": [],
+  "profile": {
+    "name": "typicode"
+  }
 }
