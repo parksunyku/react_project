@@ -1,8 +1,9 @@
-import axios from 'axios'
+import axios from 'axios';
 import { useState, useEffect } from 'react'
 import Card from '../components/Card';
 import { Link } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
+import LoadingSpinner from '../components/LoadingSpinner';
 
 const ListPage = () => {
   const navigate = useNavigate(); 
@@ -13,9 +14,12 @@ const ListPage = () => {
 
   const [posts, setPosts] = useState([]);
 
+  const [loading, setLoading] = useState(true)
+
   const getPosts = () => {
     axios.get('http://localhost:4000/posts').then((response) => {
-      setPosts(response.data)
+      setPosts(response.data);
+      setLoading(false);
     })
   }
 
@@ -31,7 +35,30 @@ const ListPage = () => {
     getPosts();
   }, []);
 
+  const renderBlogList = () => {
+    if (loading ) {
+      return (
+        <LoadingSpinner />
+      );
+    }
 
+    if (posts.length === 0) { 
+      return (<div>No blog posts found</div>)
+    }
+    return posts.map(post => {
+      return ( 
+          <Card key={post.id} title={post.title} onClick={goToEdit}>
+            <div>
+              <button 
+              className='btn btn-danger btn-sm'
+              onClick={(e) => deleteBlog(e, post.id)}>
+                Delete
+              </button>
+            </div>
+          </Card>
+      );
+    })
+  }
   return (
       <div> 
         <div className='d-flex justify-content-between'>
@@ -42,21 +69,7 @@ const ListPage = () => {
             </Link>
           </div>
         </div>
-        
-          {posts.map(post => {
-            return ( 
-                <Card key={post.id} title={post.title} onClick={goToEdit}>
-                  <div>
-                    <button 
-                    className='btn btn-danger btn-sm'
-                    onClick={(e) => deleteBlog(e, post.id)}>
-                      Delete
-                    </button>
-                  </div>
-                </Card>
-            );
-          })}   
-        
+          {renderBlogList()}   
       </div>
   )
 }
