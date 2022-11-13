@@ -1,16 +1,17 @@
+import React from 'react';
 import {
   Routes,
   Route,
 } from 'react-router-dom';
 import NavBar from './components/NavBar';
-import routes from './Routes';
+import routes from './PageRoute';
 
 
 
 function App() {
 
   return (
-    <>
+    <React.Fragment>
       <NavBar />
       <div className='container'>
         <Routes> 
@@ -19,7 +20,7 @@ function App() {
           })}
         </Routes>  
       </div>
-    </>
+    </React.Fragment>
     )
 }
 

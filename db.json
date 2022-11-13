@@ -1,9 +1,14 @@
 {
   "posts": [
     {
-      "title": "ㄴㄹㄴㄹ",
-      "body": "ㄴㄹㄴㄹ",
+      "title": "hello",
+      "body": "hi",
       "id": 1
+    },
+    {
+      "title": "title",
+      "body": "왜 안돼!!!??!!!",
+      "id": 2
     }
   ]
 }
