@@ -3,7 +3,6 @@ import { useState, useEffect } from 'react'
 import Card from '../components/Card';
 import { Link } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
-import {BrowserRouter as Router} from 'react-router-dom'; 
 
 const ListPage = () => {
   const navigate = useNavigate(); 
@@ -38,7 +37,17 @@ const ListPage = () => {
         
           {posts.map(post => {
             return ( 
-                <Card key={post.id} title={post.title} onClick={goToEdit} />
+                <Card key={post.id} title={post.title} onClick={goToEdit}>
+                  <div>
+                    <button 
+                    className='btn btn-danger btn-sm'
+                    onClick={(e)=> {
+                      e.stopPropagation();
+                     console.log('delete blog')}}>
+                      Delete
+                    </button>
+                  </div>
+                </Card>
             );
           })}   
         

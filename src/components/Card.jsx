@@ -8,7 +8,7 @@ const Card = ({title, onClick, children}) => {
           <div>{title}</div>
           {children && <div>{children}</div>}
         </div>  
-      </div>
+      </div> 
     </div>
   );
 };
