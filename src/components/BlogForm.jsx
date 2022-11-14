@@ -7,14 +7,32 @@ const BlogForm = ({editing}) => {
   const {id} = useParams();
 
   const [title, setTitle] = useState('')
+  const [originalTitle, setOriginalTitle] = useState('')
   const [body, setBody] = useState('')
+  const [originalBody, setOriginalBody] = useState('')
 
   useEffect(() => {
-    axios.get(`http://localhost:4000/posts/${id}`).then(response => {
-      setTitle(response.data.title)
-      setBody(response.data.body)
-    })    
-  }, [id])
+    if(editing) {
+      axios.get(`ht tp://localhost:4000/posts/${id}`).then(response => {
+        setTitle(response.data.title)
+        setBody(response.data.body)
+        setOriginalTitle(response.data.title)
+        setOriginalBody(response.data.body)
+      })    
+    }
+  }, [id, editing]);
+
+  const isEdited = () => {
+    return title !== originalTitle || body !== originalBody;
+  }
+
+  const goBack = () => {
+    if(editing) {
+      navigate(`/blogs/${id}`);
+    } else {
+      navigate('/blogs')
+    }
+  }
 
   const onSubmit = () => {
     if(editing) {
@@ -23,6 +41,7 @@ const BlogForm = ({editing}) => {
         body,
       }).then(response => {
         console.log(response) 
+        navigate(`/blogs/{id}`)
       })
     } else {
       axios.post('http://localhost:4000/posts', {
@@ -59,12 +78,19 @@ const BlogForm = ({editing}) => {
       <button 
         className='btn btn-primary'
         onClick={onSubmit}
+        disabled={editing && !isEdited()}
         >
-          {editing ? 'Edit' : 'Post'}
-        </button>
+        {editing ? 'Edit' : 'Post'}
+      </button>
+      <button 
+        className='btn btn-danger ms-2'
+        onClick={goBack}
+        >
+        Cancel
+      </button>
       </div> 
   )
-} 
+}
 
 BlogForm.prototype = {
   editing : Boolean
