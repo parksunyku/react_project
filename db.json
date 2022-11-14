@@ -1,14 +1,10 @@
 {
   "posts": [
     {
-      "title": "hello",
-      "body": "hi",
-      "id": 1
-    },
-    {
-      "title": "title",
-      "body": "왜 안돼!!!??!!!",
-      "id": 2
+      "title": "타이틀3",
+      "body": "하이",
+      "createdAt": 1668392374421,
+      "id": 3
     }
   ]
 }
