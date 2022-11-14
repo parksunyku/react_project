@@ -4,9 +4,8 @@ import Card from '../components/Card';
 import { Link } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
 import LoadingSpinner from '../components/LoadingSpinner';
-import BlogList from '../components/BlogList';
 
-const ListPage = () => {
+const BlogList = () => {
   const navigate = useNavigate(); 
   const [posts, setPosts] = useState([]);
   const [loading, setLoading] = useState(true)
@@ -30,16 +29,34 @@ const ListPage = () => {
     getPosts();
   }, []);
 
-  
+  if (loading ) {
+      return (
+        <LoadingSpinner />
+      );
+    }
 
-  return (
-      <div> 
-        <div className='d-flex justify-content-between'>
-          <h1>Blogs</h1>
-        </div>
-        <BlogList />
-      </div>
-  )
+    if (posts.length === 0) { 
+      return (<div>No blog posts found</div>)
+    }
+
+    return posts.filter(post => {
+      return post.publish
+    }).map(post => {
+      return ( 
+          <Card key={post.id}
+                title={post.title}
+                onClick={() => navigate(`blogs/${post.id}`)}
+          >
+            <div>
+              <button 
+              className='btn btn-danger btn-sm'
+              onClick={(e) => deleteBlog(e, post.id)}>
+                Delete
+              </button>
+            </div>
+          </Card>
+      );
+    })
 }
 
-export default ListPage
+export default BlogList
