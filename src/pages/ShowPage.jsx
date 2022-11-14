@@ -16,8 +16,8 @@ const ShowPage = () => {
   };
 
   useEffect(() => {
-    getPost()
-  }, [])
+    getPost(id)
+  }, [id])
 
   if (loading) {
     return <LoadingSpinner />
@@ -29,5 +29,5 @@ const ShowPage = () => {
     </div>
   )
 };
-
+ 
 export default ShowPage;

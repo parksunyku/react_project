@@ -47,7 +47,10 @@ const ListPage = () => {
     }
     return posts.map(post => {
       return ( 
-          <Card key={post.id} title={post.title} onClick={goToEdit}>
+          <Card key={post.id}
+                title={post.title}
+                onClick={() => navigate(`blogs/${post.id}`)}
+          >
             <div>
               <button 
               className='btn btn-danger btn-sm'
