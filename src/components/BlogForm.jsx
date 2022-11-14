@@ -10,6 +10,8 @@ const BlogForm = ({editing}) => {
   const [originalTitle, setOriginalTitle] = useState('')
   const [body, setBody] = useState('')
   const [originalBody, setOriginalBody] = useState('')
+  const [publish, setPublish] = useState(false)
+  const [originalPublish, setOriginalPublish] = useState(false)
 
   useEffect(() => {
     if(editing) {
@@ -18,12 +20,15 @@ const BlogForm = ({editing}) => {
         setBody(response.data.body)
         setOriginalTitle(response.data.title)
         setOriginalBody(response.data.body)
+        setOriginalPublish(response.data.publish)
       })    
     }
   }, [id, editing]);
 
   const isEdited = () => {
-    return title !== originalTitle || body !== originalBody;
+    return title !== originalTitle
+      || body !== originalBody
+      || publish !== originalPublish; 
   }
 
   const goBack = () => {
@@ -39,6 +44,7 @@ const BlogForm = ({editing}) => {
       axios.patch(`http://localhost:4000/posts/${id}`, {
         title,
         body,
+        publish
       }).then(response => {
         console.log(response) 
         navigate(`/blogs/{id}`)
@@ -47,13 +53,19 @@ const BlogForm = ({editing}) => {
       axios.post('http://localhost:4000/posts', {
         title,
         body,
+        publish,
         createdAt : Date.now()
       }).then(() => {
         navigate('/blogs')
       })
     }
   }
-      
+
+  const onChangePublish = (e) => {
+    console.log(e.target.checked)
+    setPublish(e.target.checked)
+  }
+
 
   return (
     <div>
@@ -74,6 +86,16 @@ const BlogForm = ({editing}) => {
         onChange={(event) =>{setBody(event.target.value);
         }}
         rows='10' /> 
+      </div>
+      <div className='form-check mb-3'>
+        <input className='form-check-input'
+        type='checkbox'
+        checked={publish}
+        onChange={onChangePublish}
+      />
+      <label className='form-check-label'>
+        Publish
+      </label>
       </div>
       <button 
         className='btn btn-primary'

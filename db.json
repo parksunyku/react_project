@@ -1,16 +1,24 @@
 {
   "posts": [
     {
-      "title": "타이틀3",
-      "body": "헬로우",
+      "title": "title edit",
+      "body": "body edit",
       "createdAt": 1668397648525,
-      "id": 4
+      "id": 4,
+      "publish": true
     },
     {
       "title": "redux",
       "body": "redux",
       "createdAt": 1668403129535,
       "id": 5
+    },
+    {
+      "title": "sfsf",
+      "body": "sfsfsfsfsfsfsf",
+      "publish": true,
+      "createdAt": 1668406782840,
+      "id": 6
     }
   ]
 }
