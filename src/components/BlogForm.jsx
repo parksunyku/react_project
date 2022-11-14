@@ -5,6 +5,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 const BlogForm = ({editing}) => {
   const navigate = useNavigate();
   const {id} = useParams();
+
   const [title, setTitle] = useState('')
   const [body, setBody] = useState('')
 
@@ -16,6 +17,14 @@ const BlogForm = ({editing}) => {
   }, [id])
 
   const onSubmit = () => {
+    if(editing) {
+      axios.patch(`http://localhost:4000/posts/${id}`, {
+        title,
+        body,
+      }).then(response => {
+        console.log(response) 
+      })
+    } else {
       axios.post('http://localhost:4000/posts', {
         title,
         body,
@@ -24,6 +33,8 @@ const BlogForm = ({editing}) => {
         navigate('/blogs')
       })
     }
+  }
+      
 
   return (
     <div>
@@ -56,7 +67,7 @@ const BlogForm = ({editing}) => {
 } 
 
 BlogForm.prototype = {
-  editing : bool
+  editing : Boolean
 }
 
 BlogForm.defaultProps = {

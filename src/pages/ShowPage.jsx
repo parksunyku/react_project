@@ -4,8 +4,11 @@ import axios from 'axios';
 import { useEffect, useState } from 'react';
 import LoadingSpinner from '../components/LoadingSpinner';
 import { Link } from 'react-router-dom';
+
+
+
 const ShowPage = () => {
-  const {id} = useParams()
+  let { id } = useParams();
   const [post, setPost] = useState(null)
   const [loading, setLoading] = useState(true)
 
