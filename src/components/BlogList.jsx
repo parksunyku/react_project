@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
 import LoadingSpinner from '../components/LoadingSpinner';
 
-const BlogList = () => {
+const BlogList = ({ isAdmin }) => {
   const navigate = useNavigate(); 
   const [posts, setPosts] = useState([]);
   const [loading, setLoading] = useState(true)
@@ -40,23 +40,30 @@ const BlogList = () => {
     }
 
     return posts.filter(post => {
-      return post.publish
+      return isAdmin || post.publish
     }).map(post => {
       return ( 
           <Card key={post.id}
                 title={post.title}
                 onClick={() => navigate(`blogs/${post.id}`)}
           >
-            <div>
+            {isAdmin ? (<div>
               <button 
               className='btn btn-danger btn-sm'
               onClick={(e) => deleteBlog(e, post.id)}>
                 Delete
               </button>
-            </div>
+            </div>) : null}
           </Card>
-      );
-    })
+    );
+  })
 }
 
+BlogList.prototype = {
+  isAdmin : Boolean
+}
+
+BlogList.defaultProps = {
+  isAdmin : false 
+}
 export default BlogList
