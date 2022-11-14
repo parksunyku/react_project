@@ -1,13 +1,6 @@
 {
   "posts": [
     {
-      "title": "title edit",
-      "body": "body edit",
-      "createdAt": 1668397648525,
-      "id": 4,
-      "publish": true
-    },
-    {
       "title": "redux",
       "body": "redux",
       "createdAt": 1668403129535,
@@ -26,6 +19,13 @@
       "publish": false,
       "createdAt": 1668411650135,
       "id": 7
+    },
+    {
+      "title": "관리자 페이지 수정",
+      "body": "수정",
+      "publish": false,
+      "createdAt": 1668417445852,
+      "id": 8
     }
   ]
 }
