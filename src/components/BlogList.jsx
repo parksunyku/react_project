@@ -12,7 +12,19 @@ const BlogList = ({ isAdmin }) => {
   const [loading, setLoading] = useState(true)
 
   const getPosts = (page = 1) => {
-    axios.get(`http://localhost:4000/posts?_page=${page}&_limit=5&_sort=id&order=desc`).then((response) => {
+    let params = {
+        _page: page,
+        _limit : 5,
+        _sort : 'id',
+        _order : 'desc',
+      }
+
+    if (!isAdmin) {
+      params = {... params, publish : true}
+    }
+    axios.get(`http://localhost:4000/posts`, {
+      params
+    }).then((response) => {
       setPosts(response.data);
       setLoading(false);
     })
@@ -45,9 +57,7 @@ const BlogList = ({ isAdmin }) => {
   Pagination
 </div>
   const renderBlogList = () => {
-    posts.filter(post => {
-      return isAdmin || post.publish
-    }).map(post => {
+    return posts.map(post => {
       return ( 
           <Card key={post.id}
                 title={post.title}
