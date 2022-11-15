@@ -5,21 +5,28 @@ import { Link } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
 import LoadingSpinner from '../components/LoadingSpinner';
 import Pagination from './Pagination';
+import { bool } from 'prop-types';
 
 const BlogList = ({ isAdmin }) => {
   const navigate = useNavigate(); 
   const [posts, setPosts] = useState([]);
-  const [loading, setLoading] = useState(true)
-  const [currentPage, setCurrentPage] = useState(1)
+  const [loading, setLoading] = useState(true);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [numberOfPosts, setNumberOfPosts] = useState(0);
+  const [numberOfPages, setNumberOfPages] = useState(0);
+  const limit = 5;
 
+  useEffect(() => {
+    setNumberOfPages(Math.ceil(setNumberOfPosts/limit));
+  }, [numberOfPosts]);
 
   const getPosts = (page = 1) => {
     setCurrentPage(page);
     let params = {
         _page: page,
-        _limit : 5,
-        _sort : 'id',
-        _order : 'desc',
+        _limit: limit,
+        _sort: 'id',
+        _order: 'desc',
       }
 
     if (!isAdmin) {
@@ -27,8 +34,9 @@ const BlogList = ({ isAdmin }) => {
     }
     axios.get(`http://localhost:4000/posts`, {
       params
-    }).then((response) => {
-      setPosts(response.data);
+    }).then((res) => {
+      setNumberOfPosts(res.headers['x-total-count'])
+      setPosts(res.data);
       setLoading(false);
     })
   }
@@ -80,17 +88,17 @@ const BlogList = ({ isAdmin }) => {
     return (
       <div>
         {renderBlogList()}
-        <Pagination
+        {numberOfPages > 1 && <Pagination
           currentPage={currentPage}
-          numberOfPages={3}
+          numberOfPages={numberOfPages}
           onClick={getPosts}
-        />
+        />}
       </div>
     )
 }
 
 BlogList.prototype = {
-  isAdmin : Boolean
+  isAdmin : bool
 }
 
 BlogList.defaultProps = {
