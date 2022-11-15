@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { useState, useEffect } from 'react'
 import Card from '../components/Card';
-import { Link } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
 import LoadingSpinner from '../components/LoadingSpinner';
 import Pagination from './Pagination';
@@ -9,6 +9,9 @@ import { bool } from 'prop-types';
 
 const BlogList = ({ isAdmin }) => {
   const navigate = useNavigate(); 
+  const location = useLocation(); 
+  const params = new URLSearchParams(location.search)
+  const pageParam = params.get('page')
   const [posts, setPosts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [currentPage, setCurrentPage] = useState(1);
@@ -20,14 +23,23 @@ const BlogList = ({ isAdmin }) => {
     setNumberOfPages(Math.ceil(setNumberOfPosts/limit));
   }, [numberOfPosts]);
 
+  const onClickPageButton = (page) => {
+    navigate(`${location.pathname}?page=${page}`)
+    getPosts(page)
+  }
   const getPosts = (page = 1) => {
-    setCurrentPage(page);
     let params = {
         _page: page,
         _limit: limit,
         _sort: 'id',
         _order: 'desc',
       }
+  
+  useEffect(() => {
+    setCurrentPage(parseInt(pageParam) || 1);
+    getPosts(parseInt(pageParam) || 1)
+  }, [pageParam])
+
 
     if (!isAdmin) {
       params = {... params, publish : true}
@@ -48,10 +60,6 @@ const BlogList = ({ isAdmin }) => {
       setPosts(prevPosts => prevPosts.filter(post =>  post.id !== id))
     });
   }
-
-  useEffect(() => {
-    getPosts();
-  }, []);
 
   if (loading ) {
       return (
@@ -91,7 +99,7 @@ const BlogList = ({ isAdmin }) => {
         {numberOfPages > 1 && <Pagination
           currentPage={currentPage}
           numberOfPages={numberOfPages}
-          onClick={getPosts}
+          onClick={onClickPageButton}
         />}
       </div>
     )
