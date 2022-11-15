@@ -4,14 +4,15 @@ import Card from '../components/Card';
 import { Link } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
 import LoadingSpinner from '../components/LoadingSpinner';
+import Pagination from './Pagination';
 
 const BlogList = ({ isAdmin }) => {
   const navigate = useNavigate(); 
   const [posts, setPosts] = useState([]);
   const [loading, setLoading] = useState(true)
 
-  const getPosts = () => {
-    axios.get('http://localhost:4000/posts').then((response) => {
+  const getPosts = (page = 1) => {
+    axios.get(`http://localhost:4000/posts?_page=${page}&_limit=5&_sort=id&order=desc`).then((response) => {
       setPosts(response.data);
       setLoading(false);
     })
@@ -19,9 +20,9 @@ const BlogList = ({ isAdmin }) => {
 
   const deleteBlog = (e, id)=> {
     e.stopPropagation();
+
     axios.delete(`http://localhost:4000/posts/${id}`).then(() => {
-      setPosts(prevPosts => prevPosts.filter(post =>  post.id !== id)
-      )
+      setPosts(prevPosts => prevPosts.filter(post =>  post.id !== id))
     });
   }
 
@@ -39,7 +40,12 @@ const BlogList = ({ isAdmin }) => {
       return (<div>No blog posts found</div>)
     }
 
-    return posts.filter(post => {
+<div>
+  BlogList
+  Pagination
+</div>
+  const renderBlogList = () => {
+    posts.filter(post => {
       return isAdmin || post.publish
     }).map(post => {
       return ( 
@@ -57,6 +63,13 @@ const BlogList = ({ isAdmin }) => {
           </Card>
     );
   })
+  }
+    return (
+      <div>
+        {renderBlogList()}
+        <Pagination />
+      </div>
+    )
 }
 
 BlogList.prototype = {
