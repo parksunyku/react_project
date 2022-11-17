@@ -6,6 +6,7 @@ import { useNavigate } from 'react-router-dom';
 import LoadingSpinner from '../components/LoadingSpinner';
 import Pagination from './Pagination';
 import { bool } from 'prop-types';
+import propTypes from 'prop-types'
 
 const BlogList = ({ isAdmin }) => {
   const navigate = useNavigate(); 
@@ -17,6 +18,8 @@ const BlogList = ({ isAdmin }) => {
   const [currentPage, setCurrentPage] = useState(1);
   const [numberOfPosts, setNumberOfPosts] = useState(0);
   const [numberOfPages, setNumberOfPages] = useState(0);
+  const [searchText, setSearchText] = useState('');
+
   const limit = 5;
 
   useEffect(() => {
@@ -33,6 +36,7 @@ const BlogList = ({ isAdmin }) => {
         _limit: limit,
         _sort: 'id',
         _order: 'desc',
+        title_like: searchText
       }
   
   useEffect(() => {
@@ -51,7 +55,7 @@ const BlogList = ({ isAdmin }) => {
       setPosts(res.data);
       setLoading(false);
     })
-  }, [isAdmin])
+  }, [isAdmin, setSearchText])
 
   const deleteBlog = (e, id)=> {
     e.stopPropagation();
@@ -65,10 +69,6 @@ const BlogList = ({ isAdmin }) => {
       return (
         <LoadingSpinner />
       );
-    }
-
-    if (posts.length === 0) { 
-      return (<div>No blog posts found</div>)
     }
 
 <div>
@@ -90,23 +90,41 @@ const BlogList = ({ isAdmin }) => {
               </button>
             </div>) : null}
           </Card>
-    );
-  })
+      );
+    })
   }
+
+  const onSearch = () => {
+    getPosts(1);
+  }
+
     return (
       <div>
-        {renderBlogList()}
-        {numberOfPages > 1 && <Pagination
-          currentPage={currentPage}
-          numberOfPages={numberOfPages}
-          onClick={onClickPageButton}
-        />}
+        <input
+          type="text"
+          placeholder='Search ..'
+          className='form-control'
+          value={searchText}
+          onChange={(e) => setSearchText(e.target.value)}
+          onKeyUp={onSearch}
+        />
+        {posts.length === 0 
+        ? <div>No blog posts found</div>
+        : <>
+          {renderBlogList()}
+          {numberOfPages > 1 && <Pagination
+            currentPage={currentPage}
+            numberOfPages={numberOfPages}
+            onClick={onClickPageButton}
+          />}
+        </>}
+        
       </div>
     )
 }
 
 BlogList.prototype = {
-  isAdmin : bool
+  isAdmin : propTypes.bool
 }
 
 BlogList.defaultProps = {
