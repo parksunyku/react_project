@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useCallback } from 'react'
 import Card from '../components/Card';
 import { useLocation } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
@@ -25,9 +25,9 @@ const BlogList = ({ isAdmin }) => {
 
   const onClickPageButton = (page) => {
     navigate(`${location.pathname}?page=${page}`)
-    getPosts(page)
   }
-  const getPosts = (page = 1) => {
+
+  const getPosts = useCallback((page = 1) => {
     let params = {
         _page: page,
         _limit: limit,
@@ -51,7 +51,7 @@ const BlogList = ({ isAdmin }) => {
       setPosts(res.data);
       setLoading(false);
     })
-  }
+  }, [isAdmin])
 
   const deleteBlog = (e, id)=> {
     e.stopPropagation();
