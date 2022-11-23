@@ -1,7 +1,6 @@
 import { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useNavigate, useParams } from 'react-router-dom';
-import { bool } from 'prop-types';
 import propTypes from 'prop-types';
 const BlogForm = ({ editing }) => {
   const navigate = useNavigate();
@@ -18,7 +17,7 @@ const BlogForm = ({ editing }) => {
 
   useEffect(() => {
     if (editing) {
-      axios.get(`ht tp://localhost:4000/posts/${id}`).then((response) => {
+      axios.get(`http://localhost:4000/posts/${id}`).then((response) => {
         setTitle(response.data.title);
         setBody(response.data.body);
         setOriginalTitle(response.data.title);
