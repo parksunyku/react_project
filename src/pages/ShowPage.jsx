@@ -23,7 +23,7 @@ const ShowPage = () => {
   }, [id]);
 
   const printDate = (timestamp) => {
-    return new Date(timestamp).toLocaleString;
+    return new Date(timestamp).toLocaleString();
   };
 
   if (loading) {

@@ -143,7 +143,7 @@ const BlogForm = ({ editing }) => {
   );
 };
 
-BlogForm.prototype = {
+BlogForm.propTypes = {
   editing: propTypes.bool,
 };
 
