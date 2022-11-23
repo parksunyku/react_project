@@ -2,10 +2,10 @@ import { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useNavigate, useParams } from 'react-router-dom';
 import propTypes from 'prop-types';
+
 const BlogForm = ({ editing }) => {
   const navigate = useNavigate();
   const { id } = useParams();
-
   const [title, setTitle] = useState('');
   const [originalTitle, setOriginalTitle] = useState('');
   const [body, setBody] = useState('');
@@ -17,12 +17,12 @@ const BlogForm = ({ editing }) => {
 
   useEffect(() => {
     if (editing) {
-      axios.get(`http://localhost:4000/posts/${id}`).then((response) => {
-        setTitle(response.data.title);
-        setBody(response.data.body);
-        setOriginalTitle(response.data.title);
-        setOriginalBody(response.data.body);
-        setOriginalPublish(response.data.publish);
+      axios.get(`http://localhost:4000/posts/${id}`).then((res) => {
+        setTitle(res.data.title);
+        setBody(res.data.body);
+        setOriginalTitle(res.data.title);
+        setOriginalBody(res.data.body);
+        setOriginalPublish(res.data.publish);
       });
     }
   }, [id, editing]);
@@ -70,9 +70,9 @@ const BlogForm = ({ editing }) => {
             body,
             publish,
           })
-          .then((response) => {
-            console.log(response);
-            navigate(`/blogs/{id}`);
+          .then((res) => {
+            console.log(res);
+            navigate(`/blogs/${id}`);
           });
       } else {
         axios

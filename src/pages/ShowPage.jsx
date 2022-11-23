@@ -5,7 +5,7 @@ import LoadingSpinner from '../components/LoadingSpinner';
 import { Link } from 'react-router-dom';
 
 const ShowPage = () => {
-  let { id } = useParams();
+  const { id } = useParams();
   console.log(id);
   const [post, setPost] = useState(null);
   const [loading, setLoading] = useState(true);
