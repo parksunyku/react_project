@@ -20,6 +20,7 @@ const BlogForm = ({ editing }) => {
       axios.get(`http://localhost:4000/posts/${id}`).then((res) => {
         setTitle(res.data.title);
         setBody(res.data.body);
+        setPublish(res.data.publish);
         setOriginalTitle(res.data.title);
         setOriginalBody(res.data.body);
         setOriginalPublish(res.data.publish);

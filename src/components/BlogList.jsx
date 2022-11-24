@@ -135,7 +135,7 @@ const BlogList = ({ isAdmin }) => {
   );
 };
 
-BlogList.prototype = {
+BlogList.propTypes = {
   isAdmin: propTypes.bool,
 };
 
